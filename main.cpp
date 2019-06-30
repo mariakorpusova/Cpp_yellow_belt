@@ -1,34 +1,45 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include <set>
 #include <algorithm>
 
 using namespace std;
 
-template <typename T>
-vector<T> FindGreaterElements(const set<T>& elements, const T& border);
+vector<string> SplitIntoWords(const string& s);
 
 int main(){
 
-	  for (int x : FindGreaterElements(set<int>{1, 5, 7, 8}, 5)) {
-	    cout << x << " ";
+	  string s = "C Cpp Java Python";
+
+	  vector<string> words = SplitIntoWords(s);
+	  cout << words.size() << " ";
+	  for (auto it = begin(words); it != end(words); ++it) {
+	    if (it != begin(words)) {
+	      cout << "/";
+	    }
+	    cout << *it;
 	  }
 	  cout << endl;
 
-	  string to_find = "Python";
-	  cout << FindGreaterElements(set<string>{"C", "C++"}, to_find).size() << endl;
 	  return 0;
 
 }
 
-template <typename T>
-vector<T> FindGreaterElements(const set<T>& elements, const T& border){
-	vector<T> res;
-	for (const auto& i : elements){
-		if ( i > border) {
-			res.push_back(i);
-		}
+vector<string> SplitIntoWords(const string& s){
+
+	vector<string> res_v;
+	auto res = find_if (begin(s), end(s), [](char c){return c == ' ';});
+	string word(begin(s), res);
+	res_v.push_back(word);
+
+	while( res < end(s)) {
+		auto start = res + 1;
+		res = find_if (start, end(s), [](char c){return c == ' ';});
+		string word(start, res);
+		res_v.push_back(word);
 	}
-	return res;
+
+	return res_v;
 
 }
