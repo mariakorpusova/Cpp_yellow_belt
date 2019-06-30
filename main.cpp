@@ -1,31 +1,34 @@
 #include <iostream>
 #include <vector>
+#include <set>
 #include <algorithm>
 
 using namespace std;
 
-void PrintVectorPart(const vector<int>& numbers);
+template <typename T>
+vector<T> FindGreaterElements(const set<T>& elements, const T& border);
 
 int main(){
 
-	  PrintVectorPart({6, 1, 8, -5, 4});
+	  for (int x : FindGreaterElements(set<int>{1, 5, 7, 8}, 5)) {
+	    cout << x << " ";
+	  }
 	  cout << endl;
-	  PrintVectorPart({-6, 1, 8, -5, 4});  // ничего не выведется
-	  cout << endl;
-	  PrintVectorPart({6, 1, 8, 5, 4});
-	  cout << endl;
+
+	  string to_find = "Python";
+	  cout << FindGreaterElements(set<string>{"C", "C++"}, to_find).size() << endl;
 	  return 0;
 
 }
 
-void PrintVectorPart(const vector<int>& numbers){
-
-	auto res = find_if(begin(numbers), end(numbers),
-			[](const int& num){ return num < 0;});
-
-	while( res > begin(numbers)){
-		res--;
-		cout << *res << " ";
+template <typename T>
+vector<T> FindGreaterElements(const set<T>& elements, const T& border){
+	vector<T> res;
+	for (const auto& i : elements){
+		if ( i > border) {
+			res.push_back(i);
+		}
 	}
+	return res;
 
 }
