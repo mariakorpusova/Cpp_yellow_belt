@@ -6,40 +6,29 @@
 
 using namespace std;
 
-vector<string> SplitIntoWords(const string& s);
+class Animal {
+public:
+    Animal(const string& s) : Name(s) {
 
-int main(){
+    }
+    const string Name;
+};
 
-	  string s = "C Cpp Java Python";
 
-	  vector<string> words = SplitIntoWords(s);
-	  cout << words.size() << " ";
-	  for (auto it = begin(words); it != end(words); ++it) {
-	    if (it != begin(words)) {
-	      cout << "/";
-	    }
-	    cout << *it;
-	  }
-	  cout << endl;
+class Dog : public Animal {
+public:
+    Dog(const string& name) : Animal(name) {
 
-	  return 0;
+    }
 
-}
+    void Bark() {
+        cout << Name << " barks: woof!" << endl;
+    }
+};
 
-vector<string> SplitIntoWords(const string& s){
+int main() {
 
-	vector<string> res_v;
-	auto res = find_if (begin(s), end(s), [](char c){return c == ' ';});
-	string word(begin(s), res);
-	res_v.push_back(word);
-
-	while( res < end(s)) {
-		auto start = res + 1;
-		res = find_if (start, end(s), [](char c){return c == ' ';});
-		string word(start, res);
-		res_v.push_back(word);
-	}
-
-	return res_v;
-
+	Dog d("Bobik");
+	d.Bark();
+	return 0;
 }
